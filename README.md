@@ -21,3 +21,10 @@ Actualmente, la identificación y atención de fallas en infraestructura suele r
 El sistema contemplará funcionalidades como el registro de reportes, asignación de responsables, actualización de estados, seguimiento de atención y generación de información para análisis administrativo. Asimismo, se integrarán reglas de negocio que permitan garantizar el correcto flujo de operación y la trazabilidad de cada incidencia.
 
 Este proyecto será desarrollado en equipos, promoviendo la organización, la comunicación y la aplicación de metodologías de desarrollo de software, permitiendo a los estudiantes experimentar un entorno similar al de un proyecto real en el ámbito profesional.
+Integrantes:
+Yeni
+Damian
+Luis
+Ale
+Abraham
+Erick
