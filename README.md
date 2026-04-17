@@ -1,8 +1,4 @@
 # VinculacionEmpresaria
-Descripción del repositorio
-
-
-Descripción del repositorio
 
 Este repositorio está destinado al desarrollo y seguimiento de proyectos correspondientes a la asignatura de Vinculación Empresarial. Su propósito es servir como espacio de trabajo para que los estudiantes integren conocimientos teóricos y prácticos en el desarrollo de soluciones de software orientadas a la resolución de problemáticas reales dentro de un entorno institucional.
 
