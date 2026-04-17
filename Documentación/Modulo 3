@@ -1,0 +1,63 @@
+Módulo 3 – Seguimiento de Incidencias
+
+1. Descripción del Módulo
+Este módulo permite la gestión activa de las solicitudes de mantenimiento desde que son recibidas hasta su cierre. Facilita la interacción entre el administrador y el personal operativo, permitiendo la asignación de tareas, el registro de evidencias fotográficas y la consulta técnica de la base de datos para asegurar la integridad de la información.
+
+2. Requerimientos Funcionales Adicionales (Basados en Interfaz)
+ID
+Requerimiento Funcional
+RF-13
+El sistema deberá mostrar el detalle completo del reporte, incluyendo: nombre del reportero, fecha, ubicación exacta y lista de evaluación.
+RF-14
+El sistema deberá permitir la visualización de archivos multimedia (imágenes adjuntas) como evidencia del problema.
+RF-15
+El sistema deberá mostrar el Contexto de la Base de Datos (Tabla, ID PK y Tipo de dato) para facilitar el mantenimiento técnico del software.
+RF-16
+El sistema deberá permitir la impresión del reporte individual y la opción de compartir la vista mediante un enlace o archivo.
+
+
+3. Reglas de Negocio Específicas del Módulo (RB)
+RB-16: Todo reporte debe mostrar una Lista de Evaluación predefinida (ej. Limpieza, Iluminación, Ventanas, Mobiliario) con estados: Bueno, Regular o Deficiente.
+RB-17: La sección de "Estado de Atención" debe bloquearse si el reporte no tiene una tarea asignada previamente.
+RB-18: Las notas del reportero deben ser inalterables una vez enviado el reporte para mantener la integridad del registro original.
+
+4. Casos de Uso del Módulo
+CU-06: Gestión de Evidencia Visual
+Actor: Técnico / Administrador
+Descripción: Permite visualizar y gestionar las fotografías adjuntas a un reporte para validar la severidad de la incidencia.
+Precondición: El reporte debe contener archivos adjuntos cargados por el usuario.
+Flujo Principal:
+El usuario abre el detalle del reporte.
+El sistema carga las miniaturas en la sección "Imágenes Adjuntas".
+El usuario selecciona una imagen para expandirla.
+Postcondición: El personal técnico cuenta con apoyo visual para preparar las herramientas necesarias antes de asistir al sitio.
+CU-07: Asignación de Tareas y Registro de Atención
+Actor: Administrador
+Descripción: Permite vincular un reporte con una acción técnica específica y registrar el progreso.
+Precondición: El reporte debe estar en estado "Pendiente".
+Flujo Principal:
+El Administrador hace clic en el botón "Asignar Tarea".
+Se selecciona al técnico y se describen las acciones a realizar.
+El sistema actualiza el "Registro de Atención" con la fecha y las notas proporcionadas.
+Postcondición: El reporte cambia su flujo a "En proceso" y queda documentado el responsable.
+
+5. Historias de Usuario (HU)
+HU-11: Como Técnico de Mantenimiento, quiero ver la "Lista de Evaluación" y los "Comentarios del Reportero" para identificar rápidamente qué componentes (ej. escritorios flojos, manchas en pizarra) requieren atención prioritaria.
+HU-12: Como Administrador, quiero ver el "Contexto de la Base de Datos" en la interfaz para identificar rápidamente el registro en la tabla reports (ID 10245) en caso de requerir una corrección manual a nivel de servidor.
+
+6. Matriz de Trazabilidad (Seguimiento)
+Caso de Uso
+RF Relacionados
+HU Relacionadas
+CU-03 (Actualizar estado)
+RF-09, RF-12
+HU-06
+CU-06 (Gestión Evidencia)
+RF-14
+HU-11
+CU-07 (Asignación)
+RF-08, RF-13
+HU-04, HU-12
+
+
+
