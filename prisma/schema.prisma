@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Auth (NextAuth v5 Prisma Adapter) ───────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(STAFF)
+  accounts      Account[]
+  sessions      Session[]
+  reportes      Reporte[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum Role {
+  STAFF
+  ADMIN
+  TECNICO
+}
+
+// ─── Facilities Domain ───────────────────────────────────────────────────────
+
+model TipoEspacio {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @db.VarChar(100)
+  espacios Espacio[]
+}
+
+model Grupo {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @db.VarChar(100)
+  espacios Espacio[]
+}
+
+model Espacio {
+  id            Int         @id @default(autoincrement())
+  espacio       String      @db.VarChar(100)
+  idGrupo       Int
+  idTipoEspacio Int
+  grupo         Grupo       @relation(fields: [idGrupo], references: [id])
+  tipoEspacio   TipoEspacio @relation(fields: [idTipoEspacio], references: [id])
+  reportes      Reporte[]
+
+  @@index([idGrupo])
+  @@index([idTipoEspacio])
+}
+
+enum EstadoReporte {
+  PENDIENTE
+  EN_PROCESO
+  ATENDIDO
+}
+
+model Reporte {
+  id                Int           @id @default(autoincrement())
+  fechaCreacion     DateTime      @default(now())
+  fechaInspeccion   DateTime
+  nombreSolicitante String        @db.VarChar(50)
+  tipoUbicacion     String        @db.VarChar(50)
+  idEspacio         Int
+  descripcion       String?       @db.VarChar(500)
+  estado            EstadoReporte @default(PENDIENTE)
+  areaResponsable   String?       @db.VarChar(50)
+  observaciones     String?       @db.VarChar(500)
+  fechaAtencion     DateTime?
+  fechaResolucion   DateTime?
+  
+  // MySQL soporta JSON nativo igual que Postgres
+  evaluacion        Json?
+  
+  // IMPORTANTE: MySQL no tiene el tipo String[]. 
+  // Se recomienda usar un JSON o una tabla relacionada. 
+  // Aquí lo mantengo como JSON para simular el array original.
+  urlImagenes       Json?
+  
+  isDraft           Boolean       @default(false)
+
+  espacio     Espacio @relation(fields: [idEspacio], references: [id])
+  creadoPor   User?   @relation(fields: [creadoPorId], references: [id])
+  creadoPorId String?
+
+  @@index([idEspacio])
+  @@index([creadoPorId])
+  @@index([estado])
+  @@index([tipoUbicacion])
+  @@index([fechaCreacion])
+}
