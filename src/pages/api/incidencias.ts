@@ -4,7 +4,6 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // GET: Obtener todas las inspecciones
   if (req.method === 'GET') {
     try {
       const inspecciones = await prisma.inspeccion.findMany({
@@ -17,7 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  // POST: Crear una nueva inspección
   if (req.method === 'POST') {
     try {
       const { reportero, fecha, tipoUbicacion, edificio, aulaSeccion, comentarios, estado } = req.body
@@ -40,6 +38,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  // Si el método no está permitido
   return res.status(405).json({ error: `Método ${req.method} no permitido` })
 }
