@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Reporte {
+  id                  BigInt   @id @default(autoincrement())
+  reporteroNombre     String
+  ubicacion           String
+  aula                String
+  descripcion         String   @db.Text // RF-18: Inalterable
+  
+  // RB-16: Lista de Evaluación
+  limpieza           String   @default("Bueno")    // Bueno, Regular, Deficiente
+  iluminacion        String   @default("Bueno")
+  mobiliario         String   @default("Bueno")
+  
+  estado              String   @default("Pendiente") 
+  fechaCreacion       DateTime @default(now())
+  ultimaActualizacion DateTime @updatedAt
+
+  @@map("reports") 
+}

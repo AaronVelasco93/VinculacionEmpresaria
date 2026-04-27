@@ -1,0 +1,17 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-vinculacion
+    restart: always
+    environment:
+      MYSQL_DATABASE: gestion_incidencias
+      MYSQL_ROOT_PASSWORD: password123
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    # Esto es vital para tu procesador M1
+    platform: linux/arm64 
+
+volumes:
+  db_data:
