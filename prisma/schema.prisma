@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Inspeccion {
+  id              Int      @id @default(autoincrement())
+  reportero       String
+  fecha           DateTime
+  tipoUbicacion   String
+  edificio        String
+  aulaSeccion     String
+  comentarios     String?
+  estado          String   @default("BORRADOR")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
